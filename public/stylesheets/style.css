@@ -1,0 +1,49 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.order {
+  padding: 20px;
+  margin-bottom: 15px;
+  background-color:#dfe6e9;
+  border-radius: 15px;
+}
+
+#done {
+  display: -webkit-box;
+  padding: 20px;
+  margin-bottom: 15px;
+  background-color: #6dff99;
+  border-radius: 15px;
+}
+
+.number {
+  margin-right: 20px;
+  display: -webkit-inline-box;
+  border: solid;
+  border-color: #34495e;
+  border-radius: 5px;
+  background-color: #2ecc71;
+  width: 50px;
+  height: 50px;
+  padding: 5px 12px;
+  text-align: center;
+}
+
+#forma {
+  width: 50%;
+}
+
+#mygtukas {
+  margin-right: 10px;
+}
+
+#mygtukai {
+  display: -webkit-inline-box;
+  padding-left: 100px;
+}

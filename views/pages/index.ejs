@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+        <main>
+                <div class="container jumbotron">
+                     <h1>Laukiama</h1>
+                    <p><a class="btn btn-primary btn-lg" href="/orders/create" role="button">Naujas uzsakymas</a></p>
+                </div>
+                    <% var num = 0 %>
+                    <% orders_list.forEach(function(order){ %>
+                        <% if(order.isDone == false) { %>
+                            <%num++ %>
+                            <div class="container order">
+                                <div class="row">
+                                        <div class="col-md-8" style="display: flex;">
+                                                <h1 class="number"><%=num %></h1>
+                                                <h3><a href='<%= order.url %>'><%= order.items[0].name %></a> (<%= order.items[0].sauce %>) <strong>X<%= order.items[0].quantity %></strong></h3>
+                                        </div>
+                                        <div id="mygtukai" class="col-md-4">
+                                            <form id="mygtukas" action="<%= order.url %>/done" method="POST">
+                                                <button class="btn btn-success btn-lg" type="submit"><span class="glyphicon glyphicon-ok"></span> Padaryta</button>
+                                            </form>
+                                            <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
+                                                    <button class="btn btn-danger btn-lg" type="submit"><span class="glyphicon glyphicon-remove"></span> Pasalinti</button>
+                                            </form>
+                                        </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                <div class="container jumbotron">
+                    <h1>Pagaminta</h1>
+                </div>
+                    <% var numb = 0 %>
+                    <% orders_list.forEach(function(order){ %>
+                        <% if(order.isDone == true) { %>
+                            <%numb++%>
+                            <div id="done" class="container order">
+                                    <div class="row">
+                                            <div class="col-md-8" style="display: flex;">
+                                                    <h1 class="number"><%=numb %></h1>
+                                                    <h3><a href='<%= order.url %>'><%= order.items[0].name %></a> (<%= order.items[0].sauce %>) <strong>X<%= order.items[0].quantity %></strong></h3>
+                                            </div>
+                                            <div id="mygtukai" class="col-md-4">
+                                                <form id="mygtukas" action="<%= order.url %>/revert" method="POST">
+                                                    <button class="btn btn-primary btn-lg" type="submit"><span class="glyphicon glyphicon-chevron-up"></span> Sugrazinti</button>
+                                                </form>
+                                                <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
+                                                        <button class="btn btn-danger btn-lg" type="submit"><span class="glyphicon glyphicon-remove"></span> Pasalinti</button>
+                                                </form>
+                                            </div>
+                                    </div>
+                                </div>
+                        <% } %>
+                    <% }) %>
+                    
+        </main>
+
+<script type="text/javascript" src="javascripts/script.js"></script>
+</body>
+</html>
