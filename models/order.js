@@ -13,7 +13,8 @@ var OrderSchema = new Schema(
   {
     isDone: {type: Boolean},
     items : [items], 
-    phone: {type: Number}
+    phone: {type: Number},
+    address: {type: String}
   });
 
   OrderSchema

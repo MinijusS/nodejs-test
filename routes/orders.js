@@ -32,7 +32,8 @@ router.get('/orders/create', function(req, res){
 router.post('/orders/create', function(req, res){
   var orderData = new Order (
     {
-    price : req.body.price,
+    address : req.body.address,
+    phone : req.body.phone,
     isDone : false
     }
   );

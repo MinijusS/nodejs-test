@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+ul {
+  list-style-type:none;
+}
+
 .order {
   padding: 20px;
   margin-bottom: 15px;
@@ -14,12 +18,8 @@ a {
   border-radius: 15px;
 }
 
-#done {
-  display: -webkit-box;
-  padding: 20px;
-  margin-bottom: 15px;
+.done {
   background-color: #6dff99;
-  border-radius: 15px;
 }
 
 .number {
@@ -43,7 +43,13 @@ a {
   margin-right: 10px;
 }
 
-#mygtukai {
+.mygtukai {
   display: -webkit-inline-box;
-  padding-left: 100px;
+  margin-right: 20px;
+  float: right;
+}
+
+.phone {
+  float: right;
+  margin-right: 70px;
 }
