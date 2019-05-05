@@ -13,34 +13,37 @@
                     <% orders_list.forEach(function(order){ %>
                         <% if(order.isDone == false) { %>
                             <%num++ %>
-                            <div class="container order">
-                                <div class="row">
-                                        <div class="col-md-8" style="display: flex;">
+                            <div class="order">
+                                        <div class="container" style="display: flex;">
                                                 <h1 class="number"><%=num %></h1>
-                                                <ul>
+                                                <div class="row justify-content-start">
+                                                    <ul>
                                                         <% for(var i=0; i < order.items[0].name.length ; i++) { %>
-                                                            
-                                                                    <li style="display: flex;"><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3>
-                                                             
-                                                                    </li>    
-                                                                                              
-                                                    <% } %>
-                                                </ul> 
-                                            </div>
-                                        <div class="mygtukai">
+                                                            <li style="display: flex;"><h4><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h4></li>                        
+                                                        <% } %>
+                                                    </ul> 
+                                                </div>
+                                                
+
+                                        <div class="container">
+                                            <div class="row justify-content-end">
                                             <form id="mygtukas" action="<%= order.url %>/done" method="POST">
                                                 <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Padaryta</button>
                                             </form>
                                             <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
                                                     <button class="btn btn-danger btn-lg" type="submit"><i class="fas fa-times"></i> Pasalinti</button>
                                             </form>
-                                            
+                                            <form id="mygtukas" action="<%= order.url %>/edit" method="GET">
+                                                    <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
+                                            </form>
+                                            </div>
                                         </div>
-                                        <div class="phone">
-                                            <h1><%= order.phone %></h1>
-                                            <h2><strong><%= order.address %></strong></h2>
                                         </div>
-                                </div>
+                                        <div class="container phone">
+                                            <h1 class="row justify-content-end"><%= order.phone %></h1>
+                                            <h2 class="row justify-content-end"><strong><%= order.address %></strong></h2>
+                                        </div>
+             
                             </div>
                         <% } %>
                     <% }) %>
@@ -69,9 +72,9 @@
                                                     <button class="btn btn-danger btn-lg" type="submit"><i class="fas fa-times"></i> Pasalinti</button>
                                             </form>
                                         </div>
-                                        <div class="phone">
-                                            <h1><%= order.phone %></h1>
-                                            <h2><strong><%= order.address %></strong></h2>
+                                        <div class="container phone">
+                                            <h1 class="row justify-content-end"><%= order.phone %></h1>
+                                            <h2 class="row justify-content-end"><strong><%= order.address %></strong></h2>
                                         </div>
                                 </div>
                             </div>

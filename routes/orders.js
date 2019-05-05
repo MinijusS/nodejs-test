@@ -67,6 +67,14 @@ router.post('/order/:id/revert', function(req, res){
   });
 });
 
+router.get('/order/:id/edit', function(req, res){
+  Order.findById(req.params.id)
+  .exec(function(err, detail){
+    if(err) {return next(err)};
+    res.render('../views/pages/edit', {order_details : detail});
+  });
+});
+
 router.post('/order/:id/delete', function(req, res){
   Order.findOneAndDelete({_id: (req.params.id)}, (err, result) => {
       if (err)

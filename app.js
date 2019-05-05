@@ -30,6 +30,8 @@ app.use('/', ordersRouter);
 app.use('/orders', ordersRouter);
 app.use('/order/:id', ordersRouter);
 app.use('/orders/create', ordersRouter);
+app.use('/order/:id/edit', ordersRouter);
+
 
 
 
