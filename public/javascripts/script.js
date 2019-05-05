@@ -1,6 +1,14 @@
-var unhide = document.getElementsByClassName('unhide');
-var hiddenDiv = document.getElementsByClassName('toHide');
+var createBtn = document.getElementsByClassName('createBtn');
+var removeBtn = document.getElementsByClassName('removeBtn');
+var form = document.querySelector('#clone');
+var forma = document.getElementById('forma');
 
-$(unhide).on('click', function(){
-    $(hiddenDiv).toggleClass('hidden');
-});
+$(createBtn).click(function() {
+    var clone = $(form).clone(forma);
+    $(forma).append(clone);
+  });
+
+  $(removeBtn).click(function() {
+    $(this).parent().remove();
+  });
+

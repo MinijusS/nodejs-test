@@ -19,25 +19,20 @@
                                                 <h1 class="number"><%=num %></h1>
                                                 <ul>
                                                         <% for(var i=0; i < order.items[0].name.length ; i++) { %>
-                                                            <div class="container">
+                                                            
                                                                     <li style="display: flex;"><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3>
-                                                                        <div class="orderBtn">
-                                                                            <a class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
-                                                                            <a class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                        </div>
-                                                                    </li>     
-                                                            </div>
-                                                                  
+                                                             
+                                                                    </li>    
                                                                                               
                                                     <% } %>
                                                 </ul> 
                                             </div>
                                         <div class="mygtukai">
                                             <form id="mygtukas" action="<%= order.url %>/done" method="POST">
-                                                <button class="btn btn-success btn-lg" type="submit"><span class="glyphicon glyphicon-ok"></span> Padaryta</button>
+                                                <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Padaryta</button>
                                             </form>
                                             <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
-                                                    <button class="btn btn-danger btn-lg" type="submit"><span class="glyphicon glyphicon-remove"></span> Pasalinti</button>
+                                                    <button class="btn btn-danger btn-lg" type="submit"><i class="fas fa-times"></i> Pasalinti</button>
                                             </form>
                                             
                                         </div>
@@ -61,17 +56,17 @@
                                         <div class="col-md-8" style="display: flex;">
                                                 <h1 class="number"><%=numb %></h1>
                                                 <ul>
-                                                    <% for(var i=0; i < order.items.length; i++) { %>
-                                                            <li><h3><a href='<%= order.url %>'><%= order.items[i].name %></a> (<%= order.items[i].sauce %>) <strong>X<%= order.items[i].quantity %></strong></h3></li>  
+                                                    <% for(var i=0; i < order.items[0].name.length; i++) { %>
+                                                        <li style="display: flex;"><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>  
                                                     <% } %>
                                                 </ul>
                                             </div>
                                         <div class="mygtukai">
                                             <form id="mygtukas" action="<%= order.url %>/revert" method="POST">
-                                                <button class="btn btn-primary btn-lg" type="submit"><span class="glyphicon glyphicon-chevron-up"></span> Sugrazinti</button>
+                                                <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-arrow-up"></i> Sugrazinti</button>
                                             </form>
                                             <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
-                                                    <button class="btn btn-danger btn-lg" type="submit"><span class="glyphicon glyphicon-remove"></span> Pasalinti</button>
+                                                    <button class="btn btn-danger btn-lg" type="submit"><i class="fas fa-times"></i> Pasalinti</button>
                                             </form>
                                         </div>
                                         <div class="phone">
@@ -83,6 +78,6 @@
                         <% } %>
                     <% }) %>
         </main>
-<script type="text/javascript" src="javascripts/script.js"></script>
+<script type="text/javascript" src="/javascripts/script.js"></script>
 </body>
 </html>
