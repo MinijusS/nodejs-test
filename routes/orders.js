@@ -11,7 +11,7 @@ router.get('/orders', function(req, res){
     Order.find({})
     .exec(function(err, list_orders){
       if (err) {return next(err)};
-      // If Successful
+      // Jeigu nera erroru turetu veikt
       res.render('../views/pages/index', {orders_list : list_orders});
     });
   });
@@ -20,7 +20,7 @@ router.get('/order/:id', function(req, res){
     Order.findById(req.params.id)
     .exec(function(err, details){
       if (err) {return next(err)};
-      // If Successful
+      // Jeigu ner erroru
       res.render('../views/pages/order', {title: 'Daugiau info', detail : details});
     });  
   });
@@ -34,7 +34,7 @@ router.post('/orders/create', function(req, res){
     {
     address : req.body.address,
     phone : req.body.phone,
-    isDone : false
+    isDone : false,
     }
   );
   var itemData = {

@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 
 var items = new Schema(
   {
-    name : String,
-    sauce : String,
-    quantity : Number
+    name : Array,
+    sauce : Array,
+    quantity : Array
   });
 
 var OrderSchema = new Schema(

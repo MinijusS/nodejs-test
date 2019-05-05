@@ -18,8 +18,17 @@
                                         <div class="col-md-8" style="display: flex;">
                                                 <h1 class="number"><%=num %></h1>
                                                 <ul>
-                                                    <% for(var i=0; i < order.items.length; i++) { %>
-                                                            <li><h3><a href='<%= order.url %>'><%= order.items[i].name %></a> (<%= order.items[i].sauce %>) <strong>X<%= order.items[i].quantity %></strong></h3></li>  
+                                                        <% for(var i=0; i < order.items[0].name.length ; i++) { %>
+                                                            <div class="container">
+                                                                    <li style="display: flex;"><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3>
+                                                                        <div class="orderBtn">
+                                                                            <a class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                                            <a class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                        </div>
+                                                                    </li>     
+                                                            </div>
+                                                                  
+                                                                                              
                                                     <% } %>
                                                 </ul> 
                                             </div>
