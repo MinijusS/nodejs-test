@@ -75,6 +75,24 @@ router.get('/order/:id/edit', function(req, res){
   });
 });
 
+router.post('/order/:id/edit', function(req, res){
+  var itemData = {
+    name: req.body.name,
+    sauce: req.body.sauce,
+    quantity: req.body.quantity
+  };
+  Order.findByIdAndUpdate({_id : (req.params.id)}, 
+  { $set: 
+    { 
+      items: itemData,
+      address: req.body.address,
+      phone: req.body.phone
+    } 
+  }, {multi:true}, (err, result) => {
+      res.redirect('/');
+});
+});
+
 router.post('/order/:id/delete', function(req, res){
   Order.findOneAndDelete({_id: (req.params.id)}, (err, result) => {
       if (err)
