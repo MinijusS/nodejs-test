@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.redirect('orders');
 });
 
-router.get('/orders', function(req, res){
+router.get('/orders', function(req, res, next){
     Order.find({})
     .exec(function(err, list_orders){
       if (err) {return next(err)};
@@ -35,6 +35,7 @@ router.post('/orders/create', function(req, res){
     address : req.body.address,
     phone : req.body.phone,
     isDone : false,
+    endIn: req.body.endIn
     }
   );
   var itemData = {
@@ -86,7 +87,8 @@ router.post('/order/:id/edit', function(req, res){
     { 
       items: itemData,
       address: req.body.address,
-      phone: req.body.phone
+      phone: req.body.phone,
+      endIn: req.body.endIn
     } 
   }, {multi:true}, (err, result) => {
       res.redirect('/');
