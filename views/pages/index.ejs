@@ -13,13 +13,17 @@
                     <% orders_list.forEach(function(order){ %>
                         <% if(order.isDone == false) { %>
                             <%num++ %>
+                            <div hidden>
+                                <h1 class="timer"><%=order.endIn %></h1>
+                            </div>
                             <div class="order">
                                         <div class="container" style="display: flex;">
                                                 <h1 class="number"><%=num %></h1>
+                            
                                                 <div class="row justify-content-start">
                                                     <ul>
                                                         <% for(var i=0; i < order.items[0].name.length ; i++) { %>
-                                                            <li style="display: flex;"><h4><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h4></li>                        
+                                                            <li style="display: flex;"><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
                                                         <% } %>
                                                     </ul> 
                                                 </div>
@@ -42,8 +46,14 @@
                                         <div class="container phone">
                                             <h1 class="row justify-content-end"><%= order.phone %></h1>
                                             <h2 class="row justify-content-end"><strong><%= order.address %></strong></h2>
+                                            <h2 class="timerShow">Uzsakymas turetu buti padarytas - 
+                                                <% if(order.createdAt == order.updatedAt) { %>
+                                                    <%=order.mins %>
+                                                    <% } else { %> 
+                                                        <%=order.minsUpd %>
+                                                    <% } %>
+                                            </h2>
                                         </div>
-             
                             </div>
                         <% } %>
                     <% }) %>
