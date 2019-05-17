@@ -3,10 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var app = express();
 
 var ordersRouter = require('./routes/orders');
+var usersRouter = require('./routes/users');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -20,19 +23,30 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(flash());
+app.use(require("express-session")({
+  secret: "Rinkimine knygele",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(function(req, res, next){
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use('/', ordersRouter);
-app.use('/orders', ordersRouter);
-app.use('/order/:id', ordersRouter);
-app.use('/orders/create', ordersRouter);
-app.use('/order/:id/edit', ordersRouter);
-
-
+app.use('/', usersRouter);
 
 
 // catch 404 and forward to error handler

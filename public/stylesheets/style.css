@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -25,11 +24,10 @@ ul {
 
 .number {
   display: -webkit-inline-box;
-  border: solid;
-  border-color: #34495e;
+  color: white;
   border-radius: 5px;
   background-color: #2ecc71;
-  width: 50px;
+  width: auto;
   height: 50px;
   padding: 0px 12px;
 }
@@ -60,12 +58,10 @@ ul {
 
 .mygtukai {
   display: -webkit-inline-box;
-  margin-right: 20px;
-  float: right;
 }
 
 .phone {
-  margin-right: 40px;
+  margin-right: 10px;
 }
 
 .unhide {
@@ -78,4 +74,11 @@ ul {
 
 .finalOrder {
   margin-top: 20px;
+}
+.info {
+  display: -webkit-inline-box;
+}
+
+.navbar {
+  margin-bottom: 20px;
 }

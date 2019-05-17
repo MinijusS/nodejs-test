@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Order = require('../models/order');
-var mongoose = require('mongoose');
+
 
 router.get('/', function(req, res, next) {
   res.redirect('orders');
@@ -12,11 +12,11 @@ router.get('/orders', function(req, res, next){
     .exec(function(err, list_orders){
       if (err) {return next(err)};
       // Jeigu nera erroru turetu veikt
-      res.render('../views/pages/index', {orders_list : list_orders});
+      res.render('../views/pages/index', {orders_list : list_orders, message: req.flash("delete")});
     });
   });
 
-router.get('/order/:id', function(req, res){
+router.get('/order/:id', isLoggedIn, function(req, res){
     Order.findById(req.params.id)
     .exec(function(err, details){
       if (err) {return next(err)};
@@ -25,15 +25,16 @@ router.get('/order/:id', function(req, res){
     });  
   });
 
-router.get('/orders/create', function(req, res){
+router.get('/orders/create', isLoggedIn, function(req, res){
    res.render('../views/pages/create');
  });
 
-router.post('/orders/create', function(req, res){
+router.post('/orders/create', isLoggedIn, function(req, res){
   var orderData = new Order (
     {
     address : req.body.address,
     phone : req.body.phone,
+    total: req.body.total,
     isDone : false,
     endIn: req.body.endIn
     }
@@ -48,7 +49,7 @@ router.post('/orders/create', function(req, res){
   res.redirect('/');
 });
 
-router.post('/order/:id/done', function(req, res){
+router.post('/order/:id/done', isLoggedIn, function(req, res){
   Order.findOneAndUpdate({_id: (req.params.id)}, { $set: { isDone: true } }, { returnOriginal: false }, (err, result) => {
       if (err)
         console.log(err);
@@ -58,7 +59,7 @@ router.post('/order/:id/done', function(req, res){
   });
 });
 
-router.post('/order/:id/revert', function(req, res){
+router.post('/order/:id/revert', isLoggedIn, function(req, res){
   Order.findOneAndUpdate({_id: (req.params.id)}, { $set: { isDone: false } }, { returnOriginal: false }, (err, result) => {
       if (err)
         console.log(err);
@@ -68,7 +69,7 @@ router.post('/order/:id/revert', function(req, res){
   });
 });
 
-router.get('/order/:id/edit', function(req, res){
+router.get('/order/:id/edit', isLoggedIn, function(req, res){
   Order.findById(req.params.id)
   .exec(function(err, detail){
     if(err) {return next(err)};
@@ -76,7 +77,7 @@ router.get('/order/:id/edit', function(req, res){
   });
 });
 
-router.post('/order/:id/edit', function(req, res){
+router.post('/order/:id/edit',isLoggedIn, function(req, res){
   var itemData = {
     name: req.body.name,
     sauce: req.body.sauce,
@@ -95,7 +96,7 @@ router.post('/order/:id/edit', function(req, res){
 });
 });
 
-router.post('/order/:id/delete', function(req, res){
+router.post('/order/:id/delete', isLoggedIn, Admin, function(req, res){
   Order.findOneAndDelete({_id: (req.params.id)}, (err, result) => {
       if (err)
         console.log(err);
@@ -105,5 +106,19 @@ router.post('/order/:id/delete', function(req, res){
   });
 });
 
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  req.flash("login", "Norint atlikti si veiksma, reikia prisijungti!");
+  res.redirect('/login');
+};
 
+function Admin(req, res, next){
+  if(req.user.isAdmin === true){
+    return next();
+  }
+  req.flash("delete", "Neturite leidimo istrinti!");
+  res.redirect('/orders');
+};
 module.exports = router;

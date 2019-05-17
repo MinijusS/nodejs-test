@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+    <% include ../partials/header %>
+<div class="container">
+    <div>
+        <h1>Naudotojo profilis: <%= currentUser.username %></h1>
+    </div>
+    <% if(currentUser.isAdmin == true) { %>
+    <div class="admin">
+            <ul>
+                <% allUsers.forEach(function(user) { %>
+                <li>
+                    <%=user.username %>
+                </li>
+                <% }) %>
+            </ul>
+
+        <h1>Siandien padaryti uzsakymai: 33</h1>
+    </div>
+    <% } %>
+
+</div>
+</body>
+</html>

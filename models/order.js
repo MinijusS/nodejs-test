@@ -13,6 +13,7 @@ var items = new Schema(
 var OrderSchema = new Schema(
   {
     isDone: {type: Boolean},
+    total: Number,
     items : [items], 
     phone: {type: Number},
     address: {type: String},
@@ -40,7 +41,6 @@ var OrderSchema = new Schema(
   .get(function(){
     const crMin= moment(this.updatedAt).format('HH:mm');
     const total = moment(crMin, 'HH:mm').add(this.endIn, 'minutes').format('HH:mm');
-    console.log(total);
     return total;
   });
 
