@@ -43,8 +43,11 @@
                       <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
                       
                       <div class="row justify-content-end">
+                          <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/confirm" method="POST">
+                              <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Priimti</button>
+                            </form>
                         <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
-                          <i class="fas fa-times"></i> Atsaukti
+                          <i class="fas fa-times"></i> Pasalinti
                         </button>
                         <form id="mygtukas" action="<%= order.url %>/guest/edit" method="GET">
                           <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
@@ -82,11 +85,9 @@
                                   <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
                                   
                                   <div class="row justify-content-end">
-                                    <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/confirm" method="POST">
-                                      <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Priimti</button>
-                                    </form>
+                               
                                     <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
-                                      <i class="fas fa-times"></i> Pasalinti
+                                      <i class="fas fa-times"></i> Atsaukti
                                     </button>
                                     <form id="mygtukas" action="<%= order.url %>/guest/edit" method="GET">
                                       <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
