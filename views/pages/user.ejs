@@ -9,20 +9,18 @@
     <div>
         <h1>Naudotojo profilis: <%= currentUser.username %></h1>
     </div>
-    <% if(currentUser.isAdmin == true) { %>
     <div class="admin">
             <ul>
                 <% allUsers.forEach(function(user) { %>
+                <h1><%=user.username %></h1>
+                    <% for (var i=0; i < user.orders.length; i++) { %>
                 <li>
-                    <%=user.username %>
+                    <%=user.orders[i].id %>
                 </li>
+                <% } %>
                 <% }) %>
             </ul>
-
-        <h1>Siandien padaryti uzsakymai: 33</h1>
     </div>
-    <% } %>
-
 </div>
 </body>
 </html>

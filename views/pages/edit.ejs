@@ -4,11 +4,12 @@
 	<% include ../partials/head %>
 </head>
 <body>
-        
+        <% include ../partials/header %>
         <div class="container">
                 <form id="forma" method="POST">
+                                <div class="btn btn-lg btn-success createBtn"><i class="fas fa-plus" style="font-size:50px;"></i></div>
                         <% for (var i=0; i < order_details.items[0].name.length; i++) { %> 
-                                <%= console.log(order_details.items[0].name.length) %>
+                                
                             <div id="clone">
                                 <label>Patiekalas:</label>
                                 <select class="form-control" name="name" value='order_details.items[0].name[i]'>
@@ -68,7 +69,7 @@
                     <div class="container">
                                     <label for="submit-form" tabindex="0" class="btn btn-success btn-lg confirm">Atnaujinti uzsakyma</label>
                                     <a class="btn btn-success btn-lg" href="/">Atgal</a>
-                                    <div class="btn btn-lg btn-success createBtn"><i class="fas fa-plus"></i></div>
+                                    
                     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

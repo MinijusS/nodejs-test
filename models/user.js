@@ -5,7 +5,9 @@ var moment = require('moment');
 var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    role: String,
+    orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order'}]
 }, 
 { timestamps: true});
 

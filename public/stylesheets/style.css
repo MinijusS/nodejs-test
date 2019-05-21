@@ -19,7 +19,11 @@ ul {
 }
 
 .done {
-  background-color: #6dff99;
+  background-color: #9fffbc;
+}
+
+.confirmed {
+  background-color: rgb(145, 195, 252);
 }
 
 .number {
@@ -30,6 +34,10 @@ ul {
   width: auto;
   height: 50px;
   padding: 0px 12px;
+}
+
+.confirm {
+  margin-bottom: 0em;
 }
 
 #forma {
@@ -43,13 +51,6 @@ ul {
 
 .form-control {
   margin-bottom: 10px;
-}
-.confirm {
-  margin-bottom: 0rem;
-}
-.removeBtn {
-  display: block;
-  margin-bottom: 15px;
 }
 
 #mygtukas {
@@ -70,6 +71,7 @@ ul {
 
 #clone {
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .finalOrder {
@@ -86,4 +88,12 @@ ul {
 .logo {
   width: auto;
   height: 35px;
+}
+
+.createBtn {
+  width: 220px;
+  height: 245px;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding-top: 90px;
 }

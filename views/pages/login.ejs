@@ -6,11 +6,15 @@
 <body class="text-center">
         <% include ../partials/header %>
         <form class="form-signin" method="POST" action="/login" style="width:50%; margin:0 auto;";>
-                <img class="mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
                 <h1 class="h3 mb-3 font-weight-normal">Prisijungti prie sistemos</h1>
-                <% if(message && message.length >0) { %>
+                <% if(login && login.length >0) { %>
                 <div class="alert alert-primary" role="alert">
-                        <%=message %>
+                        <%=login %>
+                </div>
+                <% } %>
+                <%  if(success && success.length>0) { %>
+                <div class="container alert alert-success" role="alert">
+                        <%=success %>
                 </div>
                 <% } %>
                 <label for="inputName" class="sr-only">Vardas</label>

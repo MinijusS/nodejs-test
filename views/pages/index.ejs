@@ -5,146 +5,221 @@
 </head>
 <body>
     <% include ../partials/header %>
-
-                <div class="jumbotron">
-                     <h1>Laukiama</h1>
-                     <% if (currentUser) { %>
-                    <p><a class="btn btn-primary btn-lg" href="/orders/create" role="button">Naujas uzsakymas</a></p>
-                    <% } %>
+    <% if(currentUser && currentUser.role == "Lankytojas") { %>
+    <div class="jumbotron">
+        <h1>Mano uzklausos</h1>
+        <p><a class="btn btn-primary btn-lg" href="/orders/create/guest" role="button">Nauja uzklausa</a></p>
+    </div>
+    <% } else if (currentUser && currentUser.role == "Pardavejas") { %>
+    <div class="jumbotron">
+        <h1>Visos uzklausos</h1>
+    </div>
+    <% } %>
+    <% orders_list.forEach(function(order){ %>
+        <% if(order.isConfirmed == false && currentUser.role == "Pardavejas") { %>
+          <div class="order confirmed">
+              <h1 class="timer" hidden></h1>
+              <% include ../partials/confirm %>
+              <div class="info">
+                <h1 class="number"><strong>
+                  <% if(order.createdAt == order.updatedAt) { %>
+                    <%=order.mins %>
+                    <% } else { %> 
+                      <%=order.minsUpd %>
+                      <% } %>
+                    </strong></h1>
+                    <div class="orderinfo">
+                      <ul>
+                        <% for(var i=0; i < order.items[0].name.length ; i++) { %>
+                          <li><h3><%= order.items[0].name[i] %> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
+                          <% } %>
+                        </ul> 
+                      </div>
                     </div>
-                    <%  if(message && message.length>0) { %>
-                    <div class="container alert alert-danger" role="alert">
-                            <%=message %>
+                    <h2 class="timerShow">
+                    </h2>
+                      
+                      <h1 class="phone row justify-content-end"><%= order.phone %></h1>
+                      <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
+                      
+                      <div class="row justify-content-end">
+                        <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/confirm" method="POST">
+                          <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Priimti</button>
+                        </form>
+                        <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
+                          <i class="fas fa-times"></i> Pasalinti
+                        </button>
+                        <form id="mygtukas" action="<%= order.url %>/guest/edit" method="GET">
+                          <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
+                        </form>
+                      </div>
                     </div>
                     <% } %>
-                    <% orders_list.forEach(function(order){ %>
-                        <% if(order.isDone == false) { %>
-                            <div class="order">
-                                    <h1 class="timer" hidden></h1>
-                                    <div id="patvirtintiModal" class="modal" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title">Patvirtinimas</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Ar tikrai norite istrinti si uzsakyma?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
-                                                    <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i> Tikrai</button>
-                                                </form>
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Atsaukti</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                <div class="info">
-                                        <h1 class="number"><strong>
-                                                <% if(order.createdAt == order.updatedAt) { %>
-                                                    <%=order.mins %>
-                                                    <% } else { %> 
-                                                        <%=order.minsUpd %>
-                                                    <% } %>
-                                                    </strong></h1>
-                                        <div class="orderinfo">
-                                            <ul>
-                                                <% for(var i=0; i < order.items[0].name.length ; i++) { %>
-                                                    <li><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
-                                                <% } %>
-                                            </ul> 
-                                        </div>
+                    <% if(order.isConfirmed == false && currentUser.id == order.user.id) { %>
+                      <div class="order confirmed">
+                          <h1 class="timer" hidden></h1>
+                          <% include ../partials/confirm %>
+                          <div class="info">
+                            <h1 class="number"><strong>
+                              <% if(order.createdAt == order.updatedAt) { %>
+                                <%=order.mins %>
+                                <% } else { %> 
+                                  <%=order.minsUpd %>
+                                  <% } %>
+                                </strong></h1>
+                                <div class="orderinfo">
+                                  <ul>
+                                    <% for(var i=0; i < order.items[0].name.length ; i++) { %>
+                                      <li><h3><%= order.items[0].name[i] %> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
+                                      <% } %>
+                                    </ul> 
+                                  </div>
                                 </div>
                                 <h2 class="timerShow">
                                 </h2>
-                                        <% if(currentUser) { %>
-                                            
-                                            <h1 class="phone row justify-content-end"><%= order.phone %></h1>
-                                            <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
-                                            
-                                            <div class="row justify-content-end">
-                                                    <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/done" method="POST">
-                                                        <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Padaryta</button>
-                                                    </form>
-                                                    <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
-                                                        <i class="fas fa-times"></i> Pasalinti
-                                                    </button>
-                                                    <form id="mygtukas" action="<%= order.url %>/edit" method="GET">
-                                                            <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
-                                                    </form>
-                                                    </div>
-                                          
-                            <% } %>
-                        </div>
+                     
+            
+                                <% if(currentUser.role == "Pardavejas" || currentUser.id == order.user.id) { %>
+                                  
+                                  <h1 class="phone row justify-content-end"><%= order.phone %></h1>
+                                  <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
+                                  
+                                  <div class="row justify-content-end">
+                                    <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/confirm" method="POST">
+                                      <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Priimti</button>
+                                    </form>
+                                    <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
+                                      <i class="fas fa-times"></i> Pasalinti
+                                    </button>
+                                    <form id="mygtukas" action="<%= order.url %>/guest/edit" method="GET">
+                                      <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
+                                    </form>
+                                  </div>
+                                  
+                                  <% } %>
+                                </div>
+                                <% } %>
+        <% }) %>
+<div class="jumbotron">
+  <h1>Laukiama</h1>
+  <% if (currentUser.role == "Pardavejas") { %>
+    <p><a class="btn btn-primary btn-lg" href="/orders/create" role="button">Naujas uzsakymas</a></p>
+    <% } %>
+    </div>
+    <%  if(message && message.length>0) { %>
+      <div class="container alert alert-danger" role="alert">
+        <%=message %>
+      </div>
+      <% } %>
+      <% orders_list.forEach(function(order){ %>
+        <% if(order.isDone == false) { %>
+          <div class="order">
+            <h1 class="timer" hidden></h1>
+            <% include ../partials/confirm %>
+            <div class="info">
+              <h1 class="number"><strong>
+                <% if(order.createdAt == order.updatedAt) { %>
+                  <%=order.mins %>
+                  <% } else { %> 
+                    <%=order.minsUpd %>
+                    <% } %>
+                  </strong></h1>
+                  <div class="orderinfo">
+                    <ul>
+                      <% for(var i=0; i < order.items[0].name.length ; i++) { %>
+                        <li><h3><%= order.items[0].name[i] %> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
                         <% } %>
-                    <% }) %>
-                <div class="jumbotron">
+                      </ul> 
+                    </div>
+                  </div>
+                  <h2 class="timerShow">
+                  </h2>
+                  <% if(currentUser.role == "Pardavejas") { %>
+                    
+                    <h1 class="phone row justify-content-end"><%= order.phone %></h1>
+                    <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
+                    
+                    <div class="row justify-content-end">
+                      <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/done" method="POST">
+                        <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-check"></i> Padaryta</button>
+                      </form>
+                      <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
+                        <i class="fas fa-times"></i> Pasalinti
+                      </button>
+                      <form id="mygtukas" action="<%= order.url %>/edit" method="GET">
+                        <button class="btn btn-warning btn-lg" type="submit"><i class="fas fa-edit"></i> Pataisyti</button>
+                      </form>
+                    </div>
+                    
+                    <% } %>
+                  </div>
+                  <% } %>
+                  <% }) %>
+                  <% if(currentUser.role == "Pardavejas") { %>
+                  <div class="jumbotron">
                     <h1>Pagaminta</h1>
-                </div>
-                    <% orders_list.forEach(function(order){ %>
-                        <% if(order.isDone == true) { %>
-                            <div class="order done">
-                                    <h1 class="timer" hidden></h1>
-                                    <div id="patvirtintiModal" class="modal" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title">Patvirtinimas</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Ar tikrai norite istrinti si uzsakyma?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
-                                                    <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i> Tikrai</button>
-                                                </form>
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Atsaukti</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                <div class="info">
-                                        <h1 class="number"><strong>
-                                                <% if(order.createdAt == order.updatedAt) { %>
-                                                    <%=order.mins %>
-                                                    <% } else { %> 
-                                                        <%=order.minsUpd %>
-                                                    <% } %>
-                                                    </strong></h1>
-                                        <div class="orderinfo">
-                                            <ul>
-                                                <% for(var i=0; i < order.items[0].name.length ; i++) { %>
-                                                    <li><h3><a href='<%= order.url %>'><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
-                                                <% } %>
-                                            </ul> 
-                                        </div>
+                  </div>
+                  <% orders_list.forEach(function(order){ %>
+                    <% if(order.isDone == true) { %>
+                      <div class="order done">
+                        <h1 class="timer" hidden></h1>
+                        <div id="patvirtintiModal" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Patvirtinimas</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Ar tikrai norite istrinti si uzsakyma?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form id="mygtukas" action="<%= order.url %>/delete" method="POST">
+                                            <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i> Tikrai</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Atsaukti</button>
+                                    </div>
                                 </div>
-                                <h2 class="timerShow">
-                                </h2>
-                                        <% if(currentUser) { %>
-                                        
-                                            <h1 class="phone row justify-content-end"><%= order.phone %></h1>
-                                            <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
-                                            
-                                            <div class="row justify-content-end">
-                                                    <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/revert" method="POST">
-                                                        <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-arrow-up"></i> Sugrazinti</button>
-                                                    </form>
-                                                    <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
-                                                        <i class="fas fa-times"></i> Pasalinti
-                                                    </button>
-                                                    </div>
-                                        
-                            <% } %>
+                            </div>
                         </div>
-                        <% } %>
-                    <% }) %>
+                        <div class="info">
+                          <h1 class="number"><strong>
+                            <% if(order.createdAt == order.updatedAt) { %>
+                              <%=order.mins %>
+                              <% } else { %> 
+                                <%=order.minsUpd %>
+                                <% } %>
+                              </strong></h1>
+                              <div class="orderinfo">
+                                <ul>
+                                  <% for(var i=0; i < order.items[0].name.length ; i++) { %>
+                                    <li><h3><%= order.items[0].name[i] %></a> (<%= order.items[0].sauce[i] %>) <strong>X<%= order.items[0].quantity[i] %></strong></h3></li>                        
+                                    <% } %>
+                                  </ul> 
+                                </div>
+                              </div>
+                              <h2 class="timerShow">
+                              </h2>
+
+                                <h1 class="phone row justify-content-end"><%= order.phone %></h1>
+                                <h2 class="phone row justify-content-end"><strong><%= order.address %></strong></h2>
+                                
+                                <div class="row justify-content-end">
+                                  <form id="mygtukas" class="row justify-content-end" action="<%= order.url %>/revert" method="POST">
+                                    <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-arrow-up"></i> Sugrazinti</button>
+                                  </form>
+                                  <button id="mygtukas" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#patvirtintiModal">
+                                    <i class="fas fa-times"></i> Pasalinti
+                                  </button>
+                                </div>
+                                
+                              </div>
+                              <% } %>
+                              <% }) %>
+
+                              <% } %>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

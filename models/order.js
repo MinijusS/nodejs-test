@@ -12,11 +12,12 @@ var items = new Schema(
 
 var OrderSchema = new Schema(
   {
-    isDone: {type: Boolean},
-    total: Number,
+    user : { type: Schema.Types.ObjectId, ref: 'User'},
+    isDone: Boolean,
+    isConfirmed: Boolean,
     items : [items], 
-    phone: {type: Number},
-    address: {type: String},
+    phone: Number,
+    address: String,
     endIn: {type: Number, required: true}
   }, {
     timestamps: true
